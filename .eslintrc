@@ -1,0 +1,6 @@
+{
+  "globals": {
+    "fetch": true
+  },
+  "extends": ["standard", "standard-react"]
+}

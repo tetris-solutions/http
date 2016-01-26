@@ -1,35 +1,26 @@
 var assign = require('object-assign')
-var isNode = typeof window === 'undefined'
 
 require('whatwg-fetch')
 
-function toJSON(response) {
-  var data = response
-
-  if (response.status !== 204 && typeof response.json === 'function') {
-    try {
-      data = response.json()
-    } catch (e) {
-      data = response
-    }
-  }
-
-  return data
+function toJSON (response) {
+  return response.status !== 204 && typeof response.json === 'function'
+    ? response.json()
+    : response
 }
 
-function checkStatus(response) {
+function checkStatus (response) {
   return response.ok ? response : Promise.reject(response)
 }
 
 var acceptJson = {
-  Accept: 'application/json; charset=UTF-8'
+  Accept: 'application/json'
 }
 
 var sendsJson = {
-  'Content-Type': 'application/json; charset=UTF-8'
+  'Content-Type': 'application/json'
 }
 
-function apiFetch(endpoint, config) {
+function apiFetch (endpoint, config) {
   var reqConfig = assign({}, config)
 
   reqConfig.headers = assign(reqConfig.headers || {}, acceptJson)
@@ -42,7 +33,6 @@ function apiFetch(endpoint, config) {
   return fetch(endpoint, reqConfig)
     .then(checkStatus)
     .then(toJSON)
-
 }
 
 function useMethod (method) {
