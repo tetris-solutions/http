@@ -1,0 +1,21 @@
+{
+  "name": "@tetris/http",
+  "version": "0.0.0",
+  "description": "a really small fetch abstraction",
+  "main": "index.js",
+  "dependencies": {
+    "object-assign": "^4.0.1",
+    "whatwg-fetch": "^0.11.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tetris-solutions/http.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tetris-solutions/http/issues"
+  },
+  "homepage": "https://github.com/tetris-solutions/http#readme"
+}
