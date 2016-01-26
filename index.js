@@ -1,4 +1,5 @@
 var assign = require('object-assign')
+var global = require('global')
 
 require('whatwg-fetch')
 
@@ -30,7 +31,7 @@ function apiFetch (endpoint, config) {
     assign(reqConfig.headers, sendsJson)
   }
 
-  return fetch(endpoint, reqConfig)
+  return global.fetch(endpoint, reqConfig)
     .then(checkStatus)
     .then(toJSON)
 }
