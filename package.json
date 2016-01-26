@@ -4,9 +4,7 @@
   "description": "a really small fetch abstraction for talking with your JSON APIs",
   "main": "index.js",
   "dependencies": {
-    "global": "^4.3.0",
-    "object-assign": "^4.0.1",
-    "whatwg-fetch": "^0.11.0"
+    "object-assign": "^4.0.1"
   },
   "devDependencies": {
     "eslint": "^1.10.3",

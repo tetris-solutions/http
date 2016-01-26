@@ -1,7 +1,4 @@
 var assign = require('object-assign')
-var global = require('global')
-
-require('whatwg-fetch')
 
 function toJSON (response) {
   return response.status !== 204 && typeof response.json === 'function'
@@ -31,7 +28,7 @@ function apiFetch (endpoint, config) {
     assign(reqConfig.headers, sendsJson)
   }
 
-  return global.fetch(endpoint, reqConfig)
+  return fetch(endpoint, reqConfig)
     .then(checkStatus)
     .then(toJSON)
 }
