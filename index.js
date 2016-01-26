@@ -68,10 +68,10 @@ function apiFetch (endpoint, config) {
   if (isBrowser) {
     var origin = getOrigin(endpoint) || window.location.origin
 
-    if (config.headers['Authorization']) {
-      setToken(origin, extractToken(config.headers['Authorization']))
+    if (reqConfig.headers['Authorization']) {
+      setToken(origin, extractToken(reqConfig.headers['Authorization']))
     } else if (tokens[origin]) {
-      config.headers['Authorization'] = 'Bearer ' + tokens[origin]
+      reqConfig.headers['Authorization'] = 'Bearer ' + tokens[origin]
     }
   }
 
