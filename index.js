@@ -75,6 +75,8 @@ function apiFetch (endpoint, config) {
     }
   }
 
+  reqConfig.headers['Access-Control-Expose-Headers'] = 'Authorization'
+
   return fetch(endpoint, reqConfig)
     .then(function (response) {
       if (isBrowser) {
