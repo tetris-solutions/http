@@ -79,9 +79,9 @@ function apiFetch (endpoint, config) {
 
   return fetch(endpoint, reqConfig)
     .then(function (response) {
-      if (isBrowser) {
-        setToken(origin,
-          extractToken(response.headers.get('Authorization')))
+      const authenticationHeader = response.headers.get('Authorization')
+      if (isBrowser && authenticationHeader) {
+        setToken(origin, extractToken(authenticationHeader))
       }
       return response
     })
