@@ -18,7 +18,7 @@ function persist () {
   }
 }
 
-function setToken (origin, token) {
+function saveToken (origin, token) {
   tokens[origin] = token
   persist()
 }
@@ -52,7 +52,7 @@ var sendsJson = {
 }
 
 function extractToken (str) {
-  return typeof str === 'string' ? str.replace(/^Bearer\s/, '') : str
+  return typeof str === 'string' ? str.replace(/^Bearer\s/, '') : null
 }
 
 function apiFetch (endpoint, config) {
@@ -67,9 +67,10 @@ function apiFetch (endpoint, config) {
 
   if (isBrowser) {
     var origin = getOrigin(endpoint) || window.location.origin
+    var requestToken = extractToken(reqConfig.headers['Authorization'])
 
-    if (reqConfig.headers['Authorization']) {
-      setToken(origin, extractToken(reqConfig.headers['Authorization']))
+    if (requestToken) {
+      saveToken(origin, requestToken)
     } else if (tokens[origin]) {
       reqConfig.headers['Authorization'] = 'Bearer ' + tokens[origin]
     }
@@ -79,9 +80,10 @@ function apiFetch (endpoint, config) {
 
   return fetch(endpoint, reqConfig)
     .then(function (response) {
-      const authenticationHeader = response.headers.get('Authorization')
-      if (isBrowser && authenticationHeader) {
-        setToken(origin, extractToken(authenticationHeader))
+      const responseToken = extractToken(response.headers.get('Authorization'))
+      if (responseToken) {
+        response.token = responseToken
+        if (isBrowser) saveToken(origin, responseToken)
       }
       return response
     })
@@ -95,7 +97,7 @@ function useMethod (method) {
   }
 }
 
-exports.setToken = setToken
+exports.saveToken = saveToken
 exports.GET = apiFetch
 exports.POST = useMethod('POST')
 exports.PUT = useMethod('PUT')
