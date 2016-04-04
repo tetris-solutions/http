@@ -1,13 +1,25 @@
 var assign = require('object-assign')
 
 function toJSON (response) {
-  if (response.status === 204 || typeof response.json !== 'function') return response
+  if (response.status === 204) return response
+
+  function invalidResponse () {
+    response.data = {
+      message: 'Oopss... The API returned an invalid response'
+    }
+    return Promise.reject(response)
+  }
+
+  if (typeof response.json !== 'function') {
+    return invalidResponse()
+  }
 
   return response.json()
     .then(function (data) {
       response.data = data
       return response
     })
+    .catch(invalidResponse)
 }
 
 function checkStatus (response) {
