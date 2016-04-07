@@ -7,6 +7,7 @@ function toJSON (response) {
     response.data = {
       message: 'Oopss... The API returned an invalid response'
     }
+    response.stack = new Error().stack
     return Promise.reject(response)
   }
 
